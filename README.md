@@ -1,4 +1,4 @@
-# node-js-getting-started
+# barrage
 
 一个简单的使用 Express 4 的 Node.js 应用。
 可以运行在 LeanEngine Node.js 运行时环境。
@@ -46,3 +46,4 @@ avoscloud publish
 * [JavaScript SDK API](https://leancloud.cn/docs/api/javascript/index.html)
 * [命令行工具详解](https://leancloud.cn/docs/cloud_code_commandline.html)
 * [LeanEngine FAQ](https://leancloud.cn/docs/cloud_code_faq.html)
+
