@@ -44,7 +44,7 @@ router.post('/:id', function(req, res, next) {
       //这里去请求获取微信access_token
       //如果没有access token 或者 如果过期了，这个access_token
 
-      return fetchWechat.get(`/token?grant_type=client_credential&appid=${bind.get('appId')}&secret=${bind.get('appSecret')}`).then((json) => {
+      return fetchWechat.get('/token?grant_type=client_credential&appid=' + bind.get('appId') + '&secret=' + bind.get('appSecret')).then((json) => {
         bind.set('accessToken', json.access_token);
         bind.set('expiredAt', json.expires_in + moment().unix());
         return bind.save();
@@ -63,8 +63,7 @@ router.post('/:id', function(req, res, next) {
     var MsgType = req.body.xml.MsgType;
     var MsgId = req.body.xml.MsgId;
 
-    fetchWechat.get(`/user/info?access_token=${bind.get('accessToken')}&openid=${FromUserName[0]}&lang=zh_CN`).then((json) => {
-
+    fetchWechat.get('/user/info?access_token=' + bind.get('accessToken') + '&openid=' + FromUserName[0] + '&lang=zh_CN').then((json) => {
 
       var data = {
         user : json,

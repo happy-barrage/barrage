@@ -8,7 +8,7 @@ var server_url = 'https://api.weixin.qq.com/cgi-bin';
 
 exports.get = function(url) {
 
-  return fetch(`${server_url}${url}`)
+  return fetch(server_url + url)
     .then((res) => {
       return res.json();
     }).then((json) => {
