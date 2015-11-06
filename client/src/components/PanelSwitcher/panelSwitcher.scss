@@ -1,0 +1,107 @@
+$default-out-translateX: 30%;
+$default-in-translateX: 35%;
+$default-transtion: .5s;
+
+
+.panel-switcher{
+  margin: auto;
+
+  &--wrapper{
+    width: 100%;
+    float: left;
+    position: relative;
+
+  }
+
+  &--box{
+    width: 50%;
+    float: left;
+    z-index: 1;
+    position: absolute;
+    border-radius: 4px;
+    transition: all $default-transtion;
+    opacity: 0.1;
+    margin-top: 40px;
+    background-color: #ffffff;
+
+    &.active{
+      z-index: 2;
+      opacity: 1;
+    }
+
+
+    &:first-child{
+      left: 0;
+      transform: translateX($default-out-translateX) scale(.8);
+      animation: box-1--out $default-transtion;
+      transform-origin: center right;
+      &.active{
+        transform: translateX($default-in-translateX);
+        animation: box-1 $default-transtion;
+      }
+    }
+    &:last-child{
+      right: 0;
+      transform: translateX(-$default-out-translateX) scale(.8);
+      animation: box-2--out $default-transtion;
+      transform-origin: center left;
+      &.active{
+        animation: box-2 $default-transtion;
+        transform: translateX(-$default-in-translateX);
+      }
+    }
+
+
+  }
+}
+
+
+@for $i from 1 through 2 {
+
+  $out-translateX : $default-out-translateX;
+  $in-translateX : $default-in-translateX;
+
+
+  @if($i % 2 == 0) {
+    $out-translateX : - $default-out-translateX;
+    $in-translateX : - $default-in-translateX;
+  }
+
+  @keyframes box-#{$i}{
+    0%{
+      transform: translateX($out-translateX) scale(.8);
+      z-index: 1;
+    }
+    49%{
+      transform: translateX(0) scale(.9);
+      z-index: 1;
+    }
+    50%{
+      transform: translateX(0) scale(.9);
+      z-index: 2;
+    }
+    100%{
+      transform: translateX($in-translateX) scale(1);
+      z-index: 2;
+    }
+  }
+
+  @keyframes box-#{$i}--out{
+    0%{
+      transform: translateX($in-translateX) scale(1);
+      z-index: 2;
+    }
+    49%{
+      transform: translateX(0) scale(.9);
+      z-index: 2;
+    }
+    50%{
+      transform: translateX(0) scale(.9);
+      z-index: 1;
+    }
+    100%{
+      transform: translateX($out-translateX) scale(.8);
+      z-index: 1;
+    }
+  }
+}

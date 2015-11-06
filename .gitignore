@@ -7,3 +7,5 @@ start.sh
 .avoscloud/
 
 .idea
+
+public/dist/

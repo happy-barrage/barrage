@@ -1,0 +1,14 @@
+
+$default-color : #3A4565;
+
+.panel {
+
+  &--title {
+    color: $default-color;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+    padding: 30px 0px 20px 25px
+  }
+
+}

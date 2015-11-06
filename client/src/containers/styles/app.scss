@@ -1,0 +1,17 @@
+@import "sign";
+@import "dashboard";
+
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+.app {
+  height: 100%;
+
+  &__icon-fix__menu-right {
+    margin-top: 5px;
+    margin-left: 10px;
+  }
+}

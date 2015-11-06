@@ -1,0 +1,28 @@
+.dashboard {
+
+  margin-top: 4rem;
+
+  
+  &__content__empty {
+    padding: 5rem;
+    color : rgba(0, 0, 0, 0.7);
+    font-weight: normal;
+    text-shadow: 5px 2px 5px rgba(147, 150, 150, 1);;
+  }
+
+  &__icon-fix__menu-left {
+    margin-top: -3px;
+
+    &-2 {
+      width: 1.18em;
+      float: right;
+      margin: -3px 0 0 .5em;
+      opacity: 0.9;
+    }
+  }
+}
+
+
+.bind {
+  width: 100% !important;
+}

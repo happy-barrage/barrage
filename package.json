@@ -1,16 +1,14 @@
 {
-  "name": "node-js-getting-started",
+  "name": "barrage",
   "version": "1.0.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "barrage is A Node.js app using Express 4 and use leancloud api",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node --harmony --harmony_destructuring server.js"
   },
   "keywords": [
     "node",
-    "LeanCloud",
-    "LeanEngine",
-    "express"
+    "barrage"
   ],
   "license": "MIT",
   "dependencies": {
@@ -18,6 +16,9 @@
     "cookie-parser": "^1.3.5",
     "ejs": "2.3.1",
     "express": "4.12.3",
-    "leanengine": "^0.2.0"
+    "leanengine": "^0.2.0",
+    "lodash": "^3.10.1",
+    "node-fetch": "^1.3.3",
+    "xml2js": "^0.4.15"
   }
 }

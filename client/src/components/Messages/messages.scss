@@ -1,0 +1,31 @@
+.messages {
+  height: 400px;
+  overflow: auto;
+}
+
+
+.message {
+
+
+
+
+  &--self {
+
+    background-color: RGBA(84, 178, 77, 0.8) !important;
+    padding: 10px !important;
+    border-radius: 5px;
+
+    .avatar {
+      img {
+        border-radius: 500px !important;
+      }
+    }
+
+    .text, .author, .metadata {
+      color: #ffffff !important;
+    }
+
+
+
+  }
+}
