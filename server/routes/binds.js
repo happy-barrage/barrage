@@ -64,14 +64,12 @@ router.put('/:id', (req, res, next) => {
 
   var query = new AV.Query(Bind);
 
-  let {name, token, appId, appSecret} = req.body;
-
   query.get(req.params.id).try((bind) => {
 
-    bind.set('name', name);
-    bind.set('appId', appId);
-    bind.set('appSecret', appSecret);
-    bind.set('token', token);
+    bind.set('name', req.body.name);
+    bind.set('appId', req.body.appId);
+    bind.set('appSecret', req.body.appSecret);
+    bind.set('token', req.body.token);
     return bind.save();
 
   }).try((bind) => {

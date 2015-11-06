@@ -4,7 +4,7 @@
   "description": "barrage is A Node.js app using Express 4 and use leancloud api",
   "main": "server.js",
   "scripts": {
-    "start": "node --harmony --harmony_destructuring server.js"
+    "start": "node --harmony server.js"
   },
   "keywords": [
     "node",

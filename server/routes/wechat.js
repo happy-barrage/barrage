@@ -18,9 +18,8 @@ router.get('/:id', function(req, res, next) {
   query.get(req.params.id).try((bind) => {
 
     var token = bind.get('token');
-    var {signature, timestamp, nonce, echostr} = req.query;
 
-    checkSignature({signature, timestamp, nonce, echostr}, token, (err, data) => {
+    checkSignature(req.query, token, (err, data) => {
       if(err) return next(err);
       return res.send(data);
     });
@@ -58,7 +57,11 @@ router.post('/:id', function(req, res, next) {
   }).try((bind) => {
 
 
-    var {CreateTime, FromUserName, MsgType, MsgId} = req.body.xml;
+
+    var CreateTime = req.body.xml.CreateTime;
+    var FromUserName = req.body.xml.FromUserName;
+    var MsgType = req.body.xml.MsgType;
+    var MsgId = req.body.xml.MsgId;
 
     fetchWechat.get(`/user/info?access_token=${bind.get('accessToken')}&openid=${FromUserName[0]}&lang=zh_CN`).then((json) => {
 
@@ -135,14 +138,17 @@ router.post('/:id', function(req, res, next) {
 });
 
 // 验证签名
-function checkSignature({signature, timestamp, nonce, echostr}, token, cb) {
-  var oriStr = [token, timestamp, nonce].sort().join('');
+function checkSignature(query, token, cb) {
+
+
+
+  var oriStr = [token, query.timestamp, query.nonce].sort().join('');
   var code = crypto.createHash('sha1').update(oriStr).digest('hex');
 
   //这里请小心那种带’-‘的token
 
-  if (code == signature) {
-    cb(null, echostr);
+  if (code == query.signature) {
+    cb(null, query.echostr);
   } else {
     var err = {
       code : 401,

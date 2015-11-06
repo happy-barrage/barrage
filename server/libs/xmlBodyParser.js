@@ -17,8 +17,8 @@ var xmlBodyParser = function (req, res, next) {
   // parse
   var buf = '';
   req.setEncoding('utf8');
-  req.on('data', function(chunk){ buf += chunk });
-  req.on('end', function(){
+  req.on('data', (chunk) => buf += chunk );
+  req.on('end', () => {
     xml2js.parseString(buf, function(err, json) {
       if (err) {
         err.status = 400;

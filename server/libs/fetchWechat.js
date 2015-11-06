@@ -26,23 +26,23 @@ exports.get = function(url) {
 };
 
 
-exports.replyFormat = function({ToUserName, FromUserName, Content}) {
-  //目前貌似没有这个接口，所以只能最多是一个自动回复使用
-  var result = {
-    xml: {
-      ToUserName: ToUserName,
-      FromUserName: FromUserName,
-      CreateTime: new Date().getTime(),
-      MsgType: 'text',
-      Content: Content
-    }
-  };
-
-
-  var builder = new xml2js.Builder();
-  var xml = builder.buildObject(result);
-
-  return xml;
-
-}
+//exports.replyFormat = function({ToUserName, FromUserName, Content}) {
+//  //目前貌似没有这个接口，所以只能最多是一个自动回复使用
+//  var result = {
+//    xml: {
+//      ToUserName: ToUserName,
+//      FromUserName: FromUserName,
+//      CreateTime: new Date().getTime(),
+//      MsgType: 'text',
+//      Content: Content
+//    }
+//  };
+//
+//
+//  var builder = new xml2js.Builder();
+//  var xml = builder.buildObject(result);
+//
+//  return xml;
+//
+//}
 
