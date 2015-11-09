@@ -12,6 +12,8 @@ var compression = require('compression');
 var auth = require('./routes/auth');
 var binds = require('./routes/binds');
 var wechat = require('./routes/wechat');
+var themes = require('./routes/themes');
+var chat = require('./routes/chat');
 
 var cloud = require('./cloud');
 var config = require('./config');
@@ -64,17 +66,25 @@ app.all('/api/*', (req, res, next) => {
 });
 
 
+app.use('/chat', chat);
 
 // api
 app.use('/api/auth', auth);
 app.use('/api/binds', binds);
 app.use('/api/wechat', wechat);
+app.use('/api/themes', themes);
 
 var assets_config = require('../client/webpack-assets.json');
+var APP_ID = process.env.LC_APP_ID;
+var APP_KEY = process.env.LC_APP_KEY;
+var _ = require('lodash');
 //index
 app.get('/', function (req, res) {
 
-  res.render('index', assets_config);
+  res.render('index', _.assign(assets_config, {
+    APP_ID : APP_ID,
+    APP_KEY : APP_KEY
+  }));
 
 });
 
@@ -126,7 +136,10 @@ app.use((err, req, res, next) => {
 app.use((req, res, next) => {
 
   //res.redirect('/');
-  res.render('index', assets_config);
+  res.render('index', _.assign(assets_config, {
+    APP_ID : APP_ID,
+    APP_KEY : APP_KEY
+  }));
   // res.status(404);
 });
 

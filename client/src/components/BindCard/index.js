@@ -118,8 +118,14 @@ export default class BindCard extends Component {
                          onClick={this.handleSelect.bind(this)}/>
                 </div>
 
+              </td>
+            </tr>
 
 
+            <tr>
+              <td><div className='ui ribbon label'>弹幕key</div></td>
+              <td>
+                {bind.objectId}
               </td>
             </tr>
 

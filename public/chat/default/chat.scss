@@ -1,0 +1,126 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+}
+
+body {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+$background-color-messages : RGBA(195, 227, 247, 1);
+$background-color-box : RGBA(77, 169, 227, 1);
+$background-color-bubble : rgba(255, 255, 255, 1);
+
+.chat {
+
+  &__window {
+
+    height: 100%;
+    width: 100%;
+    padding: 0;
+
+    overflow: hidden;
+
+  }
+
+
+  &__messages {
+
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    width: 100%;
+    position : relative;
+
+    background-color: transparent;
+
+
+    &--list {
+
+      list-style-type: none;
+      margin: 0;
+      width: 100%;
+      padding: 15px 25px 60px;
+
+    }
+
+  }
+
+
+  &__message {
+
+    position: relative;
+    margin-bottom: 10px;
+
+    &--firend {
+
+    }
+
+    &--self {
+      text-align: right;
+    }
+
+    &--effect &--bubble,
+    &--self &--bubble {
+      background-color: $background-color-box;
+      color: #fff;
+      text-align: left;
+    }
+
+    &--effect {
+      position: absolute;
+    }
+
+
+    &--bubble {
+
+      display: inline-block;
+      font-size: 14px;
+      max-width: 300px;
+      background-color: $background-color-bubble;
+      padding: 8px 14px;
+      border-radius: 18px;
+      min-width: 0;
+
+      vertical-align: middle; //头像
+      line-height: 18px;
+
+    }
+
+
+    &--self &--avatar {
+      margin-left: 10px;
+      float: right;
+    }
+
+    &--avatar {
+      width: 36px;
+      height: 36px;
+      display: inline-block;
+      float: left;
+      margin-right: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 500px;
+      }
+    }
+
+  }
+
+
+  &__box {
+    height: 10%;
+    background-color: $background-color-box;
+    position: relative;
+  }
+
+}

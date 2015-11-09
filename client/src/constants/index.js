@@ -24,8 +24,8 @@ if (NODE_ENV === 'development') {
 export {SERVER_URL};
 
 //这里之后可以调整，有些必须的变量，直接从服务器拿
-export const APP_ID = 'QxddDjo7gVnzx0A7pMyV9Ekq';
-export const APP_KEY = 'iOhvvhJo95T4LEp2jiG8W1fK';
+export const APP_ID = window.APP_ID || 'QxddDjo7gVnzx0A7pMyV9Ekq';
+export const APP_KEY = window.APP_KEY || 'iOhvvhJo95T4LEp2jiG8W1fK';
 
 export const PUSH = AV.push({
   appId: APP_ID,

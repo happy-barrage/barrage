@@ -18,18 +18,17 @@ let config = {
 
 // 判断环境
 switch (process.env.LC_APP_ENV) {
-
   // 当前环境为线上测试环境
-  case 'stage':
-    config.host = 'http://dev.barrage.avosapps.com';
-    config.webHost = 'http://dev.barrage.avosapps.com';
-    break;
+case 'stage':
+  config.host = 'http://dev.barrage.avosapps.com';
+  config.webHost = 'http://dev.barrage.avosapps.com';
+  break;
 
-  // 当前环境为线上正式运行的环境
-  case 'production':
-    config.host = 'http://barrage.avosapps.com';
-    config.webHost = 'http://barrage.avosapps.com';
-    break;
+// 当前环境为线上正式运行的环境
+case 'production':
+  config.host = 'http://barrage.avosapps.com';
+  config.webHost = 'http://barrage.avosapps.com';
+  break;
 }
 
 module.exports = config;

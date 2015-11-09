@@ -80,11 +80,12 @@ router.post('/:id', function(req, res, next) {
           content : req.body.xml.Content[0]
         });
         break;
-      case 'image' :
-        data = _.assign(data, {
-          image : req.body.xml.PicUrl[0]
-        });
-        break;
+        //暂时不需要图片，因为图片需要重新获取
+      //case 'image' :
+      //  data = _.assign(data, {
+      //    image : req.body.xml.PicUrl[0]
+      //  });
+      //  break;
       case 'voice' :
         data = _.assign(data, {
           recognition : req.body.xml.Recognition[0]
@@ -96,7 +97,6 @@ router.post('/:id', function(req, res, next) {
       AV.Push.send({
         data : data,
         channels : [req.params.id]
-
       });
 
 
