@@ -8,7 +8,7 @@ var APP_KEY = process.env.LC_APP_KEY;
 
 
 router.get('/:channel', (req, res, next) => {
-  res.render('chat/default/chat', {
+  res.render('chat/danmaku/chat', {
     CHANNEL : req.params.channel,
     APP_ID : APP_ID,
     APP_KEY : APP_KEY

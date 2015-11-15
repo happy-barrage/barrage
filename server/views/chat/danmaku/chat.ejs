@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>微信墙</title>
+
+
+    <link rel="stylesheet" href="/chat/danmaku/style.min.css">
+    <link rel="stylesheet" href="/chat/danmaku/chat.css">
+</head>
+
+<body>
+
+<div id="chat-wall" class="abp chat__wall">
+
+    <div id="chat-stage" class="container">
+
+    </div>
+
+</div>
+
+
+
+
+
+
+<script>
+
+    window.CONFIG = {
+        APP_ID : '<%= APP_ID %>',
+        APP_KEY : '<%= APP_KEY %>',
+        CHANNEL : '<%= CHANNEL %>'
+    };
+
+</script>
+
+<script src="/libs/AV.push.js"></script>
+<script src="/chat/danmaku/CommentCoreLibrary.min.js"></script>
+<script>
+
+    var CM = new CommentManager(document.getElementById('chat-stage'));
+    CM.init();
+
+
+    var config = window.CONFIG;
+
+
+    var PUSH = AV.push({
+        appId: config.APP_ID,
+        appKey: config.APP_KEY
+    });
+
+
+    PUSH.subscribe([config.CHANNEL], () => console.log('订阅成功'));
+    PUSH.open(() => {
+        console.log('打开成功');
+    });
+
+
+    /**
+     * Returns a random integer between min (inclusive) and max (inclusive)
+     * Using Math.round() will give you a non-uniform distribution!
+     */
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+
+    function dataFormat(data) {
+        return {
+            mode : 1,
+            text : data.content,
+            size: getRandomInt(28, 36),
+            dur: getRandomInt(9, 14)*1000,
+            shadow: false
+        }
+    }
+
+
+
+    PUSH.on('message', (data) => {
+        CM.send(dataFormat(data));
+    });
+
+    CM.start();
+
+
+</script>
+
+
+</body>
+</html>
