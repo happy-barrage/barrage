@@ -24,7 +24,7 @@ module.exports = {
       'jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
-      '__ENV__': 'stage'
+      '__ENV__': JSON.stringify('stage')
     }),
     //from react-starter
     new webpack.PrefetchPlugin("react"),

@@ -24,7 +24,7 @@ module.exports = {
       'jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
-      '__ENV__': 'production'
+      '__ENV__': JSON.stringify('production')
     }),
     //from react-starter
     new webpack.PrefetchPlugin("react"),

@@ -23,14 +23,14 @@ module.exports = {
       'jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
-      '__ENV__': 'development'
+      '__ENV__': JSON.stringify('development')
     })
   ],
   module: {
     loaders: [
       {
         test: /\.js$/,
-        loaders: ['react-hot', 'babel?stage=0'],//if use babel promise feature etc..?optional[]=runtime
+        loaders: ['react-hot', 'babel?stage=0?compact=false'],//if use babel promise feature etc..?optional[]=runtime
         exclude: /node_modules/,
         include: __dirname,
       },
