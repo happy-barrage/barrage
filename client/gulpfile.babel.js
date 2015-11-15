@@ -15,7 +15,8 @@ import del from 'del';
 const dirs = {
   src: path.join(__dirname, 'src'),
   dest: path.join(__dirname, 'dist'),
-  assets: path.join(__dirname, 'assets')
+  assets: path.join(__dirname, 'assets'),
+  public: path.join(__dirname, '../', 'public/dist')
 };
 
 gulp.task('webpack-d', (callback) => {
@@ -125,9 +126,12 @@ gulp.task('svg-build', () => {
 });
 
 gulp.task('clear-dist', () => {
+
+  console.log(`${dirs.public}/**/*`);
+
   del([
     `${dirs.dest}/**/*`,
-    path.join(__dirname, '../', 'public/dist') + '**/*'
+    `${dirs.public}/**/*`
   ]);
 });
 
