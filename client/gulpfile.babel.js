@@ -1,5 +1,6 @@
 import gulp from 'gulp';
 import gutil from 'gulp-util';
+import path from 'path';
 import svgSprite from 'gulp-svg-sprite';
 import watch from 'gulp-watch';
 import webpack from 'webpack';
@@ -12,9 +13,9 @@ import del from 'del';
 
 
 const dirs = {
-  src: './src',
-  dest: './dist',
-  assets: './assets'
+  src: path.join(__dirname, 'src'),
+  dest: path.join(__dirname, 'dist'),
+  assets: path.join(__dirname, 'assets')
 };
 
 gulp.task('webpack-d', (callback) => {
@@ -98,6 +99,12 @@ gulp.task('svg', () => {
 });
 
 
+gulp.task('image-build', () => {
+  gulp.src(`${dirs.assets}/images/*`)
+    .pipe(gulp.dest(`${dirs.dest}/images`));
+});
+
+
 gulp.task('svg-build', () => {
   gulp.src(`${dirs.assets}/svgs/*.svg`)
     .pipe(svgSprite({
@@ -120,7 +127,7 @@ gulp.task('svg-build', () => {
 gulp.task('clear-dist', () => {
   del([
     `${dirs.dest}/**/*`,
-    '../public/dist/**/*'
+    path.join(__dirname, '../', 'public/dist') + '**/*'
   ]);
 });
 
@@ -129,13 +136,13 @@ gulp.task('copy-to-public', () => {
     .pipe(gulp.dest('../public/dist'));
 });
 
-gulp.task('default', ['svg', 'font', 'image', 'webpack-dev-server']);
+gulp.task('default', ['svg-build', 'font', 'image', 'webpack-dev-server']);
 
 
 gulp.task('stage', () => {
-  runSequence('clear-dist', ['svg-build', 'webpack-s'], 'copy-to-public');
+  runSequence('clear-dist', ['svg-build', 'image-build', 'webpack-s'], 'copy-to-public');
 });
 
 gulp.task('production', () => {
-  runSequence('clear-dist', ['svg-build', 'webpack-p'], 'copy-to-public');
+  runSequence('clear-dist', ['svg-build', 'image-build', 'webpack-p'], 'copy-to-public');
 });

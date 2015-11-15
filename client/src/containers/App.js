@@ -9,10 +9,11 @@ import ClearFix from '../components/ClearFix';
 import {Link, IndexLink} from 'react-router';
 
 import * as userActions from '../reducers/user';
+import * as bindsActions from '../reducers/binds';
 
 
 import './styles/app.scss';
-import '../semantic/semantic.less';
+//import '../semantic/semantic.less';
 
 import '../semantic/definitions/modules/transition';
 import '../semantic/definitions/modules/dropdown';
@@ -32,8 +33,12 @@ class App extends Component {
   }
 
   handleSignOut(e) {
-    this.props.dispatch(userActions.signOut()).then(() => {
-      this.props.history.pushState(null, `/signin`);
+
+    const {dispatch, history} = this.props;
+
+    dispatch(userActions.signOut()).then(() => {
+      dispatch(bindsActions.removeBinds());
+      history.pushState(null, `/signin`);
     });
   }
 
@@ -70,7 +75,9 @@ class App extends Component {
         <div className='right menu'>
 
           <div ref='REF_USER_DROPDOWN_MENU' className="ui dropdown item">
-            {this.props.user.username}<Icon name='arrow-down' size='s' className={`${block}__icon-fix__menu-right`}/>
+            {this.props.user.username}
+            <i className="dropdown icon"></i>
+
             <div className="menu">
               <a className="item" onClick={this.handleSignOut.bind(this)}>退出</a>
             </div>

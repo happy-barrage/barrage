@@ -8,7 +8,7 @@ export const COMMON_STYLE_CLASS = 'common'; //common style name
 //export const
 
 let SERVER_URL = '';
-let NODE_ENV = '__ENV__' || 'development';
+let NODE_ENV = __ENV__ || 'development';
 
 if (NODE_ENV === 'development') {
   // 当前环境为「开发环境」，是由命令行工具启动的
@@ -31,3 +31,10 @@ export const PUSH = AV.push({
   appId: APP_ID,
   appKey: APP_KEY
 });
+
+//公众号类型
+export const MP = {
+  COMMON : 0,
+  SUBSCRIPTION : 1,
+  SERVICE : 2
+};

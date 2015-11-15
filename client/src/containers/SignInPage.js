@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import * as userActions from '../reducers/user';
 
 import Icon from '../components/Icon';
+import Message from '../components/Message';
 import {Link} from 'react-router';
 
 
@@ -123,10 +124,9 @@ class SignInPage extends Component {
                 onClick={this.handleSignIn.bind(this)}
                 disabled={!this.state.username || !this.state.password}>登录</button>
 
-              <div className={`ui error message ${!this.state.error ? 'hidden' : 'visible'}`}>
-                {this.state.error}
-              </div>
 
+
+              <Message message={this.state.error} />
             </form>
 
           </div>

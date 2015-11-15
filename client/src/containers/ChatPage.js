@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 
-import Messages from '../components/Messages';
+import ChatMessages from '../components/ChatMessages';
 
 import {bindActionCreators} from 'redux';
 
@@ -20,12 +20,20 @@ class ChatPage extends Component {
 
   componentWillMount() {
 
-    console.log(this.props.params.id);
 
-    PUSH.subscribe([this.props.params.id], () => console.log('订阅成功'));
+
+    PUSH.subscribe([this.props.params.id], () => {
+      console.log('订阅成功');
+    });
     PUSH.open(() => {
       console.log('打开成功');
     });
+
+
+    //去获取记录
+    this.props.dispatch(messagesActions.fetchAPIMessages(this.props.params.id));
+
+
   }
 
   componentDidMount() {
@@ -33,29 +41,36 @@ class ChatPage extends Component {
     const {dispatch} = this.props;
 
     PUSH.on('message', (data) => {
+
+      console.log(data);
       dispatch(messagesActions.createMessage(data));
     });
+
   }
 
 
   componentWillUnmount() {
     PUSH.unsubscribe(this.props.params.id, () => console.log('取消订阅成功'));
     PUSH.close();
+
+    //清空messages
+    this.props.dispatch(messagesActions.removeMessages());
   }
 
 
   handleSendMessage(message) {
+    //这里头像什么的需要修改一下的
     PUSH.send({
       data : {
         user : {
           nickname: this.props.bind.name,
-          headimgurl : 'http://semantic-ui.com/images/avatar/large/steve.jpg',
+          headimgurl : '/dist/images/doge.png',
           self : true
         },
         time : dateFormat(new Date(), 'hh:mm:ss'),
         content : message,
         type : 'text',
-        id : uuid()
+        msgid : uuid()
       },
       channels : [this.props.params.id]
     })
@@ -69,7 +84,7 @@ class ChatPage extends Component {
     const {messages} = this.props;
 
     return (
-      <Messages messages={messages} handleSendMessage={this.handleSendMessage.bind(this)}/>
+      <ChatMessages messages={messages} handleSendMessage={this.handleSendMessage.bind(this)}/>
     );
   }
 }

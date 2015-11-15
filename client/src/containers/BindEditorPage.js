@@ -8,6 +8,8 @@ import {uuid} from '../helpers';
 
 import * as bindsActions from '../reducers/binds';
 
+import {MP} from '../constants';
+
 
 class BindEditorPage extends Component {
 
@@ -19,7 +21,8 @@ class BindEditorPage extends Component {
     let currentBind = {
       objectId : '',
       name : '',
-      token : ''
+      token : '',
+      type : MP.COMMON
     };
 
     //这里的代码不是很干净

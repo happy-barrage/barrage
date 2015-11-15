@@ -1,9 +1,10 @@
 var fetch = require('node-fetch');
-var xml2js = require('xml2js');
+//var xml2js = require('xml2js');
 var AV = require('leanengine');
 
 
 var server_url = 'https://api.weixin.qq.com/cgi-bin';
+var server_file_url = 'http://file.api.weixin.qq.com/cgi-bin/media';
 
 
 exports.get = function(url) {
@@ -23,7 +24,12 @@ exports.get = function(url) {
       return json;
     });
 
-};
+}
+
+exports.file = function(url) {
+  return server_file_url + url;
+}
+
 
 
 //exports.replyFormat = function({ToUserName, FromUserName, Content}) {

@@ -1,6 +1,5 @@
 import React, {Component, PropTypes} from 'react';
 
-import Icon from '../components/Icon';
 import BindCard from '../components/BindCard';
 
 import {Link} from 'react-router';

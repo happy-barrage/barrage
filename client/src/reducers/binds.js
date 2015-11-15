@@ -6,6 +6,7 @@ import {fetchAPIWithDispatch} from '../helpers';
 const CREATE = 'app/binds/CREATE';
 const UPDATE = 'app/binds/UPDATE';
 const REMOVE = 'app/binds/REMOVE';
+const REMOVE_ALL = 'app/binds/REMOVE_ALL';
 const FETCH = 'app/binds/FETCH';
 
 
@@ -23,6 +24,7 @@ export default function reducers(state = [], action = {}) {
 
   switch (action.type) {
 
+    case REMOVE_ALL:
     case FETCH:
       return action.data.binds;
 
@@ -61,6 +63,10 @@ export function removeBind(bind) {
 
 export function fetchBinds(binds) {
   return {type: FETCH, data: {binds}};
+}
+
+export function removeBinds() {
+  return {type: REMOVE_ALL, data: {binds: []}};
 }
 
 export function fetchAPIBindStore(body) {

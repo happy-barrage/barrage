@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 
-import {setSelectRange, getInputSelection} from '../../helpers';
+import {setSelectRange, getInputSelection, uuid} from '../../helpers';
+
+import ClearFix from '../ClearFix';
 
 import './messages.scss';
 
-class Message extends Component {
-
+class ChatMessage extends Component {
 
   render() {
 
@@ -30,41 +31,60 @@ class Message extends Component {
         break;
       case 'image' :
         content = (
-          <div className='image'>
+          <div className={`ui medium rounded image ${block}--image`}>
             <img src={message.image} />
           </div>
         )
     }
 
 
-    let selfStyleClass = '';
 
-    if(message.user.self) {
-      selfStyleClass = `${block}--self`;
+
+    let messageElements = (
+
+      <div className={`comment ${block} ${block}--common ${message.user && message.user.self ? block + '--self' : ''}`}>
+
+        <div className={`content ${block}--bubble`}>
+          {content}
+        </div>
+        <ClearFix/>
+      </div>
+
+    );
+
+
+    //这里需要区分，有user的还有没有user的。
+    if(message.user) {
+
+      messageElements = (
+        <div className={`comment ${block} ${message.user && message.user.self ? block + '--self' : ''}`}>
+          <a className='avatar'>
+            <img src={message.user.headimgurl}/>
+          </a>
+          <div className='content'>
+            <a className='author' onClick={this.props.handleReply.bind(this, message.user.nickname)}>{message.user.nickname}</a>
+            <div className='metadata'>
+              <span className='date'>{message.time}</span>
+            </div>
+
+            {content}
+
+          </div>
+        </div>
+      );
+
     }
 
 
-    return (
-      <div className={`comment ${block} ${selfStyleClass}`}>
-        <a className='avatar'>
-          <img src={message.user.headimgurl}/>
-        </a>
-        <div className='content'>
-          <a className='author' onClick={this.props.handleReply.bind(this, message.user.nickname)}>{message.user.nickname}</a>
-          <div className='metadata'>
-            <span className='date'>{message.time}</span>
-          </div>
 
-          {content}
 
-        </div>
-      </div>
-    )
+
+    return messageElements;
   }
 }
 
 
-export default class Messages extends Component {
+export default class ChatMessages extends Component {
 
 
   constructor(props, context) {
@@ -152,7 +172,7 @@ export default class Messages extends Component {
           <div className={block} ref='messages'>
 
             {messages.map( message =>
-                <Message message={message} key={message.id} handleReply={handleReply}/>
+                <ChatMessage message={message} key={message.msgid} handleReply={handleReply}/>
             )}
 
           </div>

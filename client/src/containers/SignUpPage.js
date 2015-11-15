@@ -6,6 +6,8 @@ import * as userActions from '../reducers/user';
 
 import {Link} from 'react-router';
 
+import Message from '../components/Message';
+
 
 class SignUpPage extends Component {
 
@@ -129,9 +131,7 @@ class SignUpPage extends Component {
                 onClick={this.handleSignUp.bind(this)}
                 disabled={!this.state.username || !this.state.password || !this.state.email}>注册</button>
 
-              <div className={`ui error message ${!this.state.error ? 'hidden' : 'visible'}`}>
-                {this.state.error}
-              </div>
+              <Message message={this.state.error} />
 
             </form>
 

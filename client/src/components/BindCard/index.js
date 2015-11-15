@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import {Link} from 'react-router';
 
-import {SERVER_URL} from '../../constants';
+import {SERVER_URL, MP} from '../../constants';
 
 
 import './bindCard.scss';
@@ -55,7 +55,7 @@ export default class BindCard extends Component {
         history.pushState(null, '/dashboard');
       }).catch((error) => {
         _this.setState({
-          error: error.message,
+          error: error.message
         });
       }).then(() => {
         _this.setState({
@@ -75,6 +75,21 @@ export default class BindCard extends Component {
 
     const {bind} = this.props;
 
+    let type = '';
+    switch (parseInt(bind.type)) {
+
+      case MP.SUBSCRIPTION:
+        type = '订阅号';
+        break;
+      case MP.SERVICE:
+        type = '服务号';
+        break;
+
+      default:
+        type = '未认证公众号';
+        break;
+    }
+
     return (
 
 
@@ -92,6 +107,11 @@ export default class BindCard extends Component {
             </tr>
 
             <tr>
+              <td><div className='ui ribbon label'>类型</div></td>
+              <td>{type}</td>
+            </tr>
+
+            <tr>
               <td><div className='ui ribbon label'>appID</div></td>
               <td>{bind.appId}</td>
             </tr>
@@ -100,6 +120,7 @@ export default class BindCard extends Component {
               <td><div className='ui ribbon label'>appSecret</div></td>
               <td>{bind.appSecret}</td>
             </tr>
+
 
             <tr>
               <td><div className='ui ribbon label'>Token</div></td>

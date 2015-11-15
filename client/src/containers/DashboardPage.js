@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react';
 
 import Icon from '../components/Icon';
 import ClearFix from '../components/ClearFix';
+import Message from '../components/Message';
 import {Link, IndexLink} from 'react-router';
 import * as bindsActions from '../reducers/binds';
 
@@ -15,14 +16,26 @@ class DashboardPage extends Component {
       this.props.history.pushState(null, `/signin`);
     }
 
+
+    this.state = {
+      error : ''
+    };
+
   }
 
   componentWillMount() {
-    this.props.dispatch(bindsActions.fetchAPIBinds(this.props.user)).then((binds) => {
 
-    }).catch((error) => {
-      console.log(error);
-    });
+    ((_this) => {
+      _this.props.dispatch(bindsActions.fetchAPIBinds(this.props.user)).then((binds) => {
+
+      }).catch((error) => {
+        _this.setState({
+          error : error.message
+        });
+      });
+    })(this);
+
+
   }
 
   render() {
@@ -42,7 +55,7 @@ class DashboardPage extends Component {
           <div className='ui vertical menu'>
             {binds.map(bind =>
                 <Link to={`/dashboard/binds/${bind.objectId}`} className='item' key={bind.objectId} activeClassName='active'>
-                  {bind.name} <Icon name='arrow-right' size='s' className={`${block}__icon-fix__menu-left-2`}/>
+                  {bind.name} <i className='angle right icon'></i>
                 </Link>
             )}
           </div>
@@ -74,7 +87,7 @@ class DashboardPage extends Component {
 
             <div className='ui vertical menu text'>
               <Link className='item' to='/dashboard/binds/create'>
-                <Icon name='plus-empty' size='ms' className={`${block}__icon-fix__menu-left`}/> 创建一个新的公众号绑定
+                <i className='plus icon'></i> 创建一个新的公众号绑定
               </Link>
             </div>
 
@@ -82,6 +95,9 @@ class DashboardPage extends Component {
 
           </div>
           <div className='ui column ten wide'>
+
+            <Message message={this.state.error}/>
+
             {childElements}
           </div>
 
