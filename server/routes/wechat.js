@@ -4,7 +4,6 @@ var crypto = require('crypto');
 var _ = require('lodash');
 var fetchWechat = require('../libs/fetchWechat');
 var MP = require('../libs/constant').MP;
-var helpers = require('../libs/helpers');
 var moment = require('moment');
 
 
@@ -43,25 +42,8 @@ router.post('/:id', function(req, res, next) {
 
 
   bindQuery.get(req.params.id).try((bind) => {
-
-    //关于access_token 每一种类型的公众号都是可以去获取的
-
-    var accessToken = bind.get('accessToken');
-    var expiredAt = bind.get('expiredAt'); //expiredIn+上次获取的时间
-
-
-    if(!accessToken || (accessToken && parseInt(expiredAt) <= moment().unix())) {
-      //这里去请求获取微信access_token
-      //如果没有access token 或者 如果过期了，这个access_token
-      return fetchWechat.get('/token?grant_type=client_credential&appid=' + bind.get('appId') + '&secret=' + bind.get('appSecret')).then((json) => {
-        bind.set('accessToken', json.access_token);
-        bind.set('expiredAt', json.expires_in + moment().unix());
-        return bind.save();
-      });
-
-    }
-
-    return AV.Promise.as(bind);
+    //获取access_token的种种
+    return fetchWechat.accessToken(bind);
 
   }).try((bind) => {
     //需要MsgId 重排
@@ -194,7 +176,8 @@ router.post('/:id', function(req, res, next) {
     }
 
 
-    //将发送过来的数据存储起来，用于MsgId重排
+    //将发送过来的数据存储起来，用于MsgId重排,
+    //todo 这个data的time在存的时候需要注意一下，变成秒也好，什么也好
     var message = Message.new(_.extend(data, {
       bind : bind
     }));

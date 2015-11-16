@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import _ from 'lodash';
+
 import {setSelectRange, getInputSelection, uuid} from '../../helpers';
 
 import ClearFix from '../ClearFix';
@@ -62,7 +64,7 @@ class ChatMessage extends Component {
             <img src={message.user.headimgurl}/>
           </a>
           <div className='content'>
-            <a className='author' onClick={this.props.handleReply.bind(this, message.user.nickname)}>{message.user.nickname}</a>
+            <a className='author' onClick={this.props.handleReply.bind(this, message.user)}>{message.user.nickname}</a>
             <div className='metadata'>
               <span className='date'>{message.time}</span>
             </div>
@@ -91,14 +93,21 @@ export default class ChatMessages extends Component {
     super(props, context);
 
     this.state = {
-      input : ''
+      input : '',
+      replies : [],
+      scroll : true,
+      scroll_show : false
     };
   }
 
 
   scrollToBottom() {
-    let chatNode = this.refs.messages.getDOMNode();
-    chatNode.scrollTop = chatNode.scrollHeight;
+
+    if(this.state.scroll) {
+      let chatNode = this.refs['REF_MESSAGES'].getDOMNode();
+      chatNode.scrollTop = chatNode.scrollHeight;
+    }
+
   }
 
 
@@ -106,12 +115,42 @@ export default class ChatMessages extends Component {
     this.scrollToBottom();
   }
 
+  componentDidMount() {
 
-  handleReply(name) {
+    ((_this) => {
 
+      $(_this.refs['REF_MESSAGES_CONTAINER'].getDOMNode()).hover(() => {
+        _this.setState({
+          scroll_show : true
+        });
+      }, () => {
+        _this.setState({
+          scroll_show : false
+        });
+      });
+
+    })(this);
+
+
+  }
+
+
+  handleReply(user) {
+
+    //要回复的用户列表
+    let {replies} = this.state;
+    replies.push(user);
+    this.setState({
+      replies : replies
+    });
+
+
+
+    //这里是将名字变成@到聊天输入框里
+    const {nickname} = user;
     let field = this.refs['REF_MESSAGE_INPUT'].getDOMNode();
     let pos = getInputSelection(field);
-    let at = `@${name}`;
+    let at = `@${nickname}`;
 
     let input = `${this.state.input.substring(0, pos.start)} ${at} ${this.state.input.substring(pos.end)}`;
 
@@ -126,6 +165,12 @@ export default class ChatMessages extends Component {
   handleChange(e) {
     this.setState({
       [e.target.name] : e.target.value
+    });
+  }
+
+  handleChangeCheckbox(e) {
+    this.setState({
+      [e.target.name] : e.target.checked
     });
   }
 
@@ -144,10 +189,29 @@ export default class ChatMessages extends Component {
 
   send() {
 
-    if(!!this.state.input) {
-      this.props.handleSendMessage(this.state.input);
+    let {replies, input} = this.state;
+
+    if(!!input) {
+
+
+
+
+      //过滤出来要真正需要回复的用户列表，避免重复回复
+      if(!_.isEmpty(replies)) {
+        replies = _.uniq(replies, 'openid');
+        replies = _.filter(replies, (reply) => {
+          //过滤掉在文本框里也删除掉的，和自己本身
+          return input.indexOf(`@${reply.nickname}`) !== -1 && bind.name !== reply.nickname;
+        });
+
+      }
+
+
+
+      this.props.handleSendMessage(input, replies);
       this.setState({
-        input : ''
+        input : '',
+        replies : []
       });
     }
 
@@ -166,10 +230,29 @@ export default class ChatMessages extends Component {
 
     return (
 
-      <div className='ui segment'>
-        <div className='ui comments'>
+      <div className='ui segment' ref='REF_MESSAGES_CONTAINER'>
 
-          <div className={block} ref='messages'>
+        <div className={`${block}__controls ${this.state.scroll_show?'visible':'hidden'}`}>
+
+          <div className='ui toggle checkbox'>
+            <input
+              type='checkbox'
+              name='scroll'
+              checked={this.state.scroll}
+              onChange={this.handleChangeCheckbox.bind(this)}
+              id='scroll'/>
+            <label htmlFor='scroll'>开始滚屏</label>
+          </div>
+
+        </div>
+
+
+
+
+
+        <div className={`ui comments ${block}__content`}>
+
+          <div className={block} ref='REF_MESSAGES'>
 
             {messages.map( message =>
                 <ChatMessage message={message} key={message.msgid} handleReply={handleReply}/>

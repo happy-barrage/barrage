@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import {fetchAPIWithDispatch} from '../helpers';
+import {fetchAPIWithDispatch, fetchAPI} from '../helpers';
 
 
 const CREATE = 'app/messages/CREATE';
@@ -57,5 +57,14 @@ export function fetchAPIMessages(objectId) {
     url : `/binds/${objectId}/messages`,
     method: 'get',
     callback : fetchMessages
+  });
+}
+
+export function fetchAPIMessageSend(objectId, body) {
+  return fetchAPI({
+    url : `/binds/${objectId}/messages`,
+    method: 'post',
+    body : body,
+    callback : () => {}
   });
 }

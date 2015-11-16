@@ -17,6 +17,7 @@ import './styles/app.scss';
 
 import '../semantic/definitions/modules/transition';
 import '../semantic/definitions/modules/dropdown';
+//import '../semantic/definitions/modules/checkbox';
 
 
 class App extends Component {

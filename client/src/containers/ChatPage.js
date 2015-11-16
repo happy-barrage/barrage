@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import * as messagesActions from '../reducers/messages';
 
 
-import {PUSH} from '../constants';
+import {PUSH, MP} from '../constants';
 import {uuid, dateFormat} from '../helpers';
 
 
@@ -42,7 +42,6 @@ class ChatPage extends Component {
 
     PUSH.on('message', (data) => {
 
-      console.log(data);
       dispatch(messagesActions.createMessage(data));
     });
 
@@ -58,33 +57,34 @@ class ChatPage extends Component {
   }
 
 
-  handleSendMessage(message) {
+  /**
+   * 回复用户，如果有回复用户将已客服模式发送到用户的微信
+   * @param content
+   * @param replies 回复的用户
+   */
+  handleSendMessage(content, replies) {
     //这里头像什么的需要修改一下的
-    PUSH.send({
-      data : {
-        user : {
-          nickname: this.props.bind.name,
-          headimgurl : '/dist/images/doge.png',
-          self : true
-        },
-        time : dateFormat(new Date(), 'hh:mm:ss'),
-        content : message,
-        type : 'text',
-        msgid : uuid()
-      },
-      channels : [this.props.params.id]
-    })
+
+    const {dispatch, bind} = this.props;
+    const type = 'text';
+
+    if(bind.type < MP.SERVICE) {
+      //如果不是服务号，那么不会去回复用户，为了避免错误
+      replies = [];
+    }
+
+    messagesActions.fetchAPIMessageSend(bind.objectId, {
+      content, type, replies
+    });
   }
 
 
 
   render() {
 
-
     const {messages} = this.props;
-
     return (
-      <ChatMessages messages={messages} handleSendMessage={this.handleSendMessage.bind(this)}/>
+      <ChatMessages bind={bind} messages={messages} handleSendMessage={this.handleSendMessage.bind(this)}/>
     );
   }
 }

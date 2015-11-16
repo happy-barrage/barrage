@@ -1,6 +1,29 @@
 .messages {
   height: 400px;
   overflow: auto;
+
+
+  &__controls {
+    position: absolute;
+    top: 15px;
+    right: -141px;
+    padding: 10px;
+    border: 1px solid #ececec;
+    border-left: none;
+    background: #ffffff;
+
+    &.hidden {
+      display: none;
+    }
+
+    &.visible {
+      display: block;
+    }
+  }
+
+  &__content {
+    margin-top: 0 !important;
+  }
 }
 
 
@@ -9,7 +32,6 @@
   &--image {
     margin-top: 10px;
   }
-
 
   &--common {
     margin-left: 8px !important;

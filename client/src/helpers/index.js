@@ -20,36 +20,45 @@ export function fetchParseJSON(response) {
   return response.json();
 }
 
+export function fetchAPI({url, method, body, callback}, dispatch = null) {
+  return new Promise((resolved, reject) => {
+
+    let config = {
+      method: method,
+      credentials : 'include',
+      mode: 'cors',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    };
+
+    if(body) {
+      config = _.extend(config, {body: JSON.stringify(body)});
+    }
+
+    fetch(`${SERVER_URL}${url}`, config)
+      .then(fetchCheckStatus)
+      .then(fetchParseJSON)
+      .then((data) => {
+        if(dispatch) {
+          dispatch(callback(data));
+        } else {
+          callback(data);
+        }
+
+        resolved(data);
+      }).catch((error) => {
+        error.response.then(data => reject(data))
+      });
+  });
+}
+
 
 export function fetchAPIWithDispatch({url, method, body, callback}) {
 
   return (dispatch) => {
-    return new Promise((resolved, reject) => {
-
-      let config = {
-        method: method,
-        credentials : 'include',
-        mode: 'cors',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      };
-
-      if(body) {
-        config = _.extend(config, {body: JSON.stringify(body)});
-      }
-
-      fetch(`${SERVER_URL}${url}`, config)
-        .then(fetchCheckStatus)
-        .then(fetchParseJSON)
-        .then((data) => {
-          dispatch(callback(data));
-          resolved(data);
-        }).catch((error) => {
-          error.response.then(data => reject(data))
-        });
-    });
+    return fetchAPI({url, method, body, callback}, dispatch);
   }
 }
 
