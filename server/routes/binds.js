@@ -201,7 +201,7 @@ router.post('/:id/messages', (req, res, next) => {
   }).try((message, bind) => {
 
     var replies = req.body.replies;
-    
+
     //需要user也传过去
     var result = message.toJSON();
     result.user = message.get('user');

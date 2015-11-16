@@ -127,12 +127,13 @@ gulp.task('svg-build', () => {
 
 gulp.task('clear-dist', () => {
 
-  console.log(`${dirs.public}/**/*`);
-
   del([
     `${dirs.dest}/**/*`,
     `${dirs.public}/**/*`
-  ]);
+  ], {
+    force : true
+  });
+
 });
 
 gulp.task('copy-to-public', () => {
