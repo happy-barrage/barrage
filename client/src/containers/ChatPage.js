@@ -82,7 +82,7 @@ class ChatPage extends Component {
 
   render() {
 
-    const {messages} = this.props;
+    const {messages, bind} = this.props;
     return (
       <ChatMessages bind={bind} messages={messages} handleSendMessage={this.handleSendMessage.bind(this)}/>
     );

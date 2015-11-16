@@ -190,6 +190,7 @@ export default class ChatMessages extends Component {
   send() {
 
     let {replies, input} = this.state;
+    const {bind, handleSendMessage} = this.props;
 
     if(!!input) {
 
@@ -201,14 +202,13 @@ export default class ChatMessages extends Component {
         replies = _.uniq(replies, 'openid');
         replies = _.filter(replies, (reply) => {
           //过滤掉在文本框里也删除掉的，和自己本身
-          return input.indexOf(`@${reply.nickname}`) !== -1 && bind.name !== reply.nickname;
+          return input.indexOf(`@${reply.nickname}`) !== -1 && bind.appId !== reply.openid;
         });
 
       }
 
 
-
-      this.props.handleSendMessage(input, replies);
+      handleSendMessage(input, replies);
       this.setState({
         input : '',
         replies : []
