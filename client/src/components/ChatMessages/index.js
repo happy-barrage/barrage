@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import _ from 'lodash';
 
+import $ from 'jquery';
+
 import {setSelectRange, getInputSelection, uuid} from '../../helpers';
 
 import ClearFix from '../ClearFix';

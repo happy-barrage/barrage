@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import $ from 'jquery';
 
 import ClearFix from '../ClearFix';
 import Message from '../Message';

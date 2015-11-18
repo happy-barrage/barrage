@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 
 import _ from 'lodash';
+import $ from 'jquery';
 
 import {connect} from 'react-redux';
 
@@ -13,11 +14,10 @@ import * as bindsActions from '../reducers/binds';
 
 
 import './styles/app.scss';
-//import '../semantic/semantic.less';
 
-import '../semantic/definitions/modules/transition';
-import '../semantic/definitions/modules/dropdown';
-//import '../semantic/definitions/modules/checkbox';
+//需要加载的几个插件
+import 'semantic-transition';
+import 'semantic-dropdown';
 
 
 class App extends Component {

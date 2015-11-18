@@ -1,5 +1,5 @@
 exports.MP = {
-  COMMON : 0,
-  SUBSCRIPTION : 1,
-  SERVICE : 2
+  COMMON : 1,
+  SUBSCRIPTION : 2,
+  SERVICE : 3
 }

@@ -43,7 +43,6 @@ router.use((req, res, next) => {
 
 const Bind = AV.Object.extend('Bind');
 const Message = AV.Object.extend('Message');
-
 const UserWechat = AV.Object.extend('UserWechat');
 
 
@@ -267,6 +266,9 @@ router.post('/:id/messages', (req, res, next) => {
   });
 
 });
+
+
+
 
 
 router.get('/', (req, res, next) => {

@@ -2,6 +2,8 @@ import {uuid} from '../helpers';
 
 import '../leancloud/AV.push';
 
+import {MP} from '../../../server/libs/constant';
+
 export const SVG_URL = '/dist/icons/sprites.svg';//这个是根据gulp生成svg来做的静态的svg地址
 export const COMMON_STYLE_CLASS = 'common'; //common style name
 
@@ -33,8 +35,4 @@ export const PUSH = AV.push({
 });
 
 //公众号类型
-export const MP = {
-  COMMON : 0,
-  SUBSCRIPTION : 1,
-  SERVICE : 2
-};
+export {MP};

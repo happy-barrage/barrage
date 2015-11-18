@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "barrage client with leancloud",
   "dependencies": {
-    "element-class": "^0.2.2",
     "es6-promise": "^3.0.2",
     "history": "^1.12.5",
     "jquery": "^2.1.4",
@@ -31,6 +30,7 @@
     "exports-loader": "^0.6.2",
     "file-loader": "^0.8.4",
     "gulp": "^3.9.0",
+    "gulp-shell": "^0.5.1",
     "gulp-svg-sprite": "^1.2.11",
     "gulp-util": "^3.0.6",
     "gulp-watch": "^4.3.5",

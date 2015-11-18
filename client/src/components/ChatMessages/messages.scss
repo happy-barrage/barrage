@@ -59,7 +59,7 @@
       height:20px;
       border-left:20px solid $bubble-color;
       border-bottom-right-radius: 16px 14px;
-      -webkit-transform:translate(0, -2px);
+      transform:translate(0, -2px);
     }
 
     &:after {
@@ -72,7 +72,7 @@
       height:20px;
       background:white;
       border-bottom-right-radius: 10px;
-      -webkit-transform:translate(-30px, -2px);
+      transform:translate(-30px, -2px);
     }
 
 

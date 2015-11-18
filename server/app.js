@@ -105,11 +105,11 @@ if (app.get('env') === 'development') {
   app.use((err, req, res, next) => {
     let statusCode = err.status || 500;
 
-    res.status(statusCode);
-
     if (statusCode !== 404) {
       //如果不是404错误那么就用json 返回，一般来说就是api模式的
       console.error(err.stack || err);
+
+      res.status(statusCode);
       res.json(err);
       return;
     }
@@ -123,9 +123,8 @@ app.use((err, req, res, next) => {
 
   let statusCode = err.status || 500;
 
-  res.status(statusCode);
-
   if (statusCode !== 404) {
+    res.status(statusCode);
     res.json(err);
     return;
   }
