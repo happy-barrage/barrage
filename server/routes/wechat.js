@@ -63,6 +63,8 @@ router.post('/:id', function(req, res, next) {
     if(message) {
       //如果有message那么就不需要重新发送存储
       res.send('');
+
+      return;
     }
 
     //查不到message那么就发送去吧！
@@ -120,10 +122,7 @@ router.post('/:id', function(req, res, next) {
         //如果没有用户或者过期
         //如果过期了就需要重新来获取
         return fetchWechat.get('/user/info?access_token=' + accessToken + '&openid=' + openid + '&lang=zh_CN').then((json) => {
-          //获取了用户之后需要将用户存储起来，因为获取用户是有限制的，不能每次都去获取用户
-          data = _.assign(data, {
-            user : json
-          });
+
 
           //将用户保存起来
           var userWechat = UserWechat.new(_.extend(json, {
@@ -131,6 +130,13 @@ router.post('/:id', function(req, res, next) {
             bind : bind
           }));
           userWechat.save();
+
+
+          //获取了用户之后需要将用户存储起来，因为获取用户是有限制的，不能每次都去获取用户
+          //千万不要存json会错误，因为user应该是一个pointer 而不是object
+          data = _.assign(data, {
+            user : userWechat
+          });
 
           return AV.Promise.as(data, accessToken, bind);
         });
@@ -142,6 +148,8 @@ router.post('/:id', function(req, res, next) {
 
 
   }).try((data, accessToken, bind) => {
+
+
 
 
     //这里返回数据
@@ -175,7 +183,6 @@ router.post('/:id', function(req, res, next) {
       break;
     }
 
-
     //将发送过来的数据存储起来，用于MsgId重排,
     //todo 这个data的time在存的时候需要注意一下，变成秒也好，什么也好
     var message = Message.new(_.extend(data, {
@@ -187,6 +194,8 @@ router.post('/:id', function(req, res, next) {
 
 
   }).try((message) => {
+
+
 
     var result = message.toJSON();
     result.user = message.get('user');
