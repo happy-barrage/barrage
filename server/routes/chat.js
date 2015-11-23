@@ -27,7 +27,7 @@ router.get('/:channel', (req, res, next) => {
   query.get(themeId).try((theme) => {
 
     if(theme) {
-      res.render('chat/'+theme.path+'/index', dataRender);
+      res.render('chat/'+theme.get('path')+'/index', dataRender);
     } else {
       res.render('chat/danmaku/index', dataRender);
     }

@@ -16,13 +16,17 @@ $(document).ready(function () {
   });
 
 
-  PUSH.subscribe([config.CHANNEL], () => console.log('订阅成功'));
-  PUSH.open(() => {
+  PUSH.subscribe([config.CHANNEL], function() {
+    console.log('订阅成功');
+  });
+
+
+  PUSH.open(function() {
     console.log('打开成功');
   });
 
 
-  PUSH.on('message', (data) => {
+  PUSH.on('message', function(data) {
     sendMessage(data);
   });
 

@@ -26,9 +26,9 @@ var config = {
 
 
       //fix react
-      'react/lib': path.resolve(nodeModulesPath, 'react/lib'),
+      'react/lib': nodeModulesPath + 'react/lib',
       //fix history
-      'history/lib': path.resolve(nodeModulesPath, 'history/lib'),
+      'history/lib': nodeModulesPath + 'history/lib',
 
 
       'react' : nodeModulesPath + '/react/dist/react.min.js',

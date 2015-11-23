@@ -9,7 +9,7 @@ const Theme = AV.Object.extend('Theme');
 
 router.get('/bind/:id', (req, res, next) => {
   var bindQuery = new AV.Query(Bind);
-  
+
   bindQuery.get(req.params.id).try((bind) => {
     var themeQuery = new AV.Query(Theme);
 
