@@ -92,11 +92,11 @@ app.get('/', function (req, res) {
 
  //如果任何路由都没匹配到，则认为 404
  //生成一个异常让后面的 err handler 捕获
-app.use((req, res, next) => {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+// app.use((req, res, next) => {
+//   var err = new Error('Not Found');
+//   err.status = 404;
+//   next(err);
+// });
 
 // error handlers
 
