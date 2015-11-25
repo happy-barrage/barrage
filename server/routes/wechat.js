@@ -108,7 +108,6 @@ router.post('/:id', function(req, res, next) {
 
       return userQuery.first().try((user) => {
 
-
         if(user && user.get('expiredAt') >= moment().unix()) {
           //已经存在用户，并且没有过期
           data = _.assign(data, {
@@ -123,12 +122,27 @@ router.post('/:id', function(req, res, next) {
         //如果过期了就需要重新来获取
         return fetchWechat.get('/user/info?access_token=' + accessToken + '&openid=' + openid + '&lang=zh_CN').then((json) => {
 
+          var userWechat = user;
 
-          //将用户保存起来
-          var userWechat = UserWechat.new(_.extend(json, {
+          json = _.extend(json, {
             expiredAt : moment().unix() + 604800, //一个星期的过期时间
             bind : bind
-          }));
+          });
+
+          if(userWechat) {
+            //已经存在了user那么就更新user就好
+            _.forIn(json, (value, key) => {
+              userWechat.set(key, value);
+            });
+
+
+          } else {
+            //创建新的user
+            userWechat = UserWechat.new(json);
+
+          }
+
+          //将用户保存起来
           userWechat.save();
 
 
