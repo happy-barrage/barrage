@@ -14,7 +14,7 @@ router.get('/:channel', (req, res, next) => {
 
   var channelId = req.params.channel;
 
-  var themeId = req.query.theme || 'fake_id_for_danmuku';
+  var themeId = req.query.theme || '564c78aa60b259caed4cffcb';
 
   var query = new AV.Query(Theme);
 
