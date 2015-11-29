@@ -2,6 +2,7 @@
 var domain = require('domain');
 var express = require('express');
 var path = require('path');
+var _ = require('lodash');
 
 //express中间件
 var cookieParser = require('cookie-parser');
@@ -17,6 +18,8 @@ var chat = require('./routes/chat');
 
 var cloud = require('./cloud');
 var config = require('./config');
+
+var assets_config = require('../client/webpack-assets.json');
 
 var app = express();
 
@@ -74,19 +77,8 @@ app.use('/api/binds', binds);
 app.use('/api/wechat', wechat);
 app.use('/api/themes', themes);
 
-var assets_config = require('../client/webpack-assets.json');
-var APP_ID = process.env.LC_APP_ID;
-var APP_KEY = process.env.LC_APP_KEY;
-var _ = require('lodash');
-//index
-app.get('/', function (req, res) {
 
-  res.render('index', _.assign(assets_config, {
-    APP_ID : APP_ID,
-    APP_KEY : APP_KEY
-  }));
 
-});
 
 
 
@@ -116,28 +108,30 @@ if (app.get('env') === 'development') {
 
     next();
   });
+} else {
+  // 如果是非开发环境，则页面只输出简单的错误信息
+  app.use((err, req, res, next) => {
+
+    let statusCode = err.status || 500;
+
+    if (statusCode !== 404) {
+      res.status(statusCode);
+      res.json(err);
+      return;
+    }
+
+    next();
+  });
 }
 
-// 如果是非开发环境，则页面只输出简单的错误信息
-app.use((err, req, res, next) => {
 
-  let statusCode = err.status || 500;
-
-  if (statusCode !== 404) {
-    res.status(statusCode);
-    res.json(err);
-    return;
-  }
-
-  next();
-});
 
 app.use((req, res, next) => {
 
   //res.redirect('/');
   res.render('index', _.assign(assets_config, {
-    APP_ID : APP_ID,
-    APP_KEY : APP_KEY
+    APP_ID : process.env.LC_APP_ID,
+    APP_KEY : process.env.LC_APP_KEY
   }));
   // res.status(404);
 });
