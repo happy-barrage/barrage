@@ -54,7 +54,7 @@ router.post('/', (req, res, next) => {
   bind.set('appId', req.body.appId);
   bind.set('appSecret', req.body.appSecret);
   bind.set('token', req.body.token);
-  bind.set('type', req.body.type);
+  bind.set('type', req.body.type + '');
   bind.set('user', req.current);
   //bind.setACL(new AV.ACL(req.current));
 
